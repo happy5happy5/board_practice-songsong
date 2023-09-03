@@ -43,7 +43,7 @@ public class BoardController {
         // BoardsDTO를 생성하여 데이터를 담아서 모델에 추가
         BoardsDTO boardsDTO = new BoardsDTO(boards, page, totalPages, startPage, endPage);
         model.addAttribute("boardsDTO", boardsDTO);
-
+//zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
         return "board/list"; // Thymeleaf 템플릿 파일의 경로를 반환합니다.
     }
 
