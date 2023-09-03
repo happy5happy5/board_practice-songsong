@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create 게시물</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Create 게시물</h1>
+    <form th:action="@{/board/create}" method="post">
+        <div class="mb-3">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="writer" class="form-label">작성자</label>
+            <input type="text" class="form-control" id="writer" name="writer" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">비밀번호</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <!-- 다른 필드 추가 -->
+        <button type="submit" class="btn btn-primary">게시물 생성</button>
+        <a href="/board/list" class="btn btn-secondary">리스트로 돌아가기</a>
+    </form>
+</div>
+
+<script src="webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

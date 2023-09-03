@@ -28,4 +28,29 @@ public class BoardServiceImpl implements BoardService {
         int offset = (page - 1) * pageSize;
         return boardMapper.getBoards(offset, pageSize);
     }
+
+    @Override
+    public Board getBoardById(Long id) {
+        return boardMapper.getBoardById(id);
+    }
+
+    @Override
+    public void updateBoard(Long id, Board updatedBoard) {
+        boardMapper.updateBoard(id, updatedBoard);
+    }
+
+    @Override
+    public boolean checkPassword(Long id, String password) {
+        return boardMapper.checkPassword(id, password);
+    }
+
+    @Override
+    public void deleteBoard(Long id) {
+        boardMapper.deleteBoard(id);
+    }
+
+    @Override
+    public void createBoard(Board board) {
+        boardMapper.createBoard(board);
+    }
 }
