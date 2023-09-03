@@ -5,6 +5,8 @@ CREATE TABLE IF NOT EXISTS board
     password     VARCHAR(40)  NOT NULL,
     title        VARCHAR(300) NOT NULL,
     content      TEXT         NOT NULL,
+    parent_id    BIGINT       DEFAULT NULL,
+    level        INT          DEFAULT 0,
     created_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

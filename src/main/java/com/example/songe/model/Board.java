@@ -16,6 +16,8 @@ public class Board {
     private String writer;
     private String content;
     private String password;
+    private Integer level;
+    private Integer parent_id;
     private String created_time;
     private String updated_time;
 }
