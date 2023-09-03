@@ -1,0 +1,27 @@
+
+server:
+  port: 9090
+SECRET_KEY: "onedaytwodaythreedayfourdayfivedaysixdayseven"
+spring:
+  #  live reload
+  devtools:
+    livereload:
+      enabled: true
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+  freemarker:
+    cache: false
+  # static resource
+  web:
+    resources:
+      static-locations: classpath:/static/
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/happy5?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: Allen8731!
+  sql:
+    init:
+      mode: always
