@@ -20,6 +20,11 @@ public class BoardMapperImpl implements BoardMapper{
     }
 
     @Override
+    public List<Board> getReplies(Long parent_board_id) {
+        return boardMapper.getReplies(parent_board_id);
+    }
+
+    @Override
     public Integer getTotalBoardCount() {
         return boardMapper.getTotalBoardCount();
     }
@@ -48,4 +53,10 @@ public class BoardMapperImpl implements BoardMapper{
     public void createBoard(Board board) {
         boardMapper.createBoard(board);
     }
+
+    @Override
+    public List<Board> getBoardsByParentBoardId(Long id) {
+        return boardMapper.getBoardsByParentBoardId(id);
+    }
+
 }

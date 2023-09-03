@@ -1,14 +1,16 @@
 CREATE TABLE IF NOT EXISTS board
 (
-    id           BIGINT AUTO_INCREMENT PRIMARY KEY,
-    writer       VARCHAR(100) NOT NULL,
-    password     VARCHAR(40)  NOT NULL,
-    title        VARCHAR(300) NOT NULL,
-    content      TEXT         NOT NULL,
-    parent_id    BIGINT       DEFAULT NULL,
-    level        INT          DEFAULT 0,
-    created_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    id              BIGINT AUTO_INCREMENT PRIMARY KEY,
+    writer          VARCHAR(100) NOT NULL,
+    password        VARCHAR(40)  NOT NULL,
+    title           VARCHAR(300) NOT NULL,
+    content         TEXT         NOT NULL,
+    parent_id       BIGINT    DEFAULT NULL,
+    parent_board_id BIGINT    DEFAULT NULL,
+    level           INT       DEFAULT 0,
+    is_deleted      BOOLEAN   DEFAULT FALSE,
+    created_time    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_time    TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 #
 # CREATE TABLE IF NOT EXISTS user

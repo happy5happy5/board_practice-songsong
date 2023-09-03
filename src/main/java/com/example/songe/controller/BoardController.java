@@ -97,8 +97,23 @@ public class BoardController {
         }
     }
 
+    @GetMapping("/create/{id}")
+    public String createBoard(Model model, @PathVariable(required = false) Long id) {
+        System.out.println("[Controller GET /board/create/{id}]  createBoard() called");
+        Board board = boardService.getBoardById(id);
+        if (board == null) {
+            board = new Board();
+            board.setLevel(0); // 기본 level 값 설정
+            board.setParent_board_id(null); // 기본 parent_board_id 값 설정
+            board.setParent_id(null); // 기본 parent_id 값 설정
+        }
+        model.addAttribute("board", board);
+
+        return "board/create";
+    }
+
     @GetMapping("/create")
-    public String createBoard() {
+    public String createBoard(Model model) {
         System.out.println("[Controller GET /board/create]  createBoard() called");
         return "board/create";
     }

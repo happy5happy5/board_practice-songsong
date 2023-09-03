@@ -26,7 +26,11 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<Board> getBoards(int page, int pageSize) {
         int offset = (page - 1) * pageSize;
-        return boardMapper.getBoards(offset, pageSize);
+        List<Board> boards = boardMapper.getBoards(offset, pageSize);
+        for (Board board : boards) {
+            board.setReplies(boardMapper.getReplies(board.getId()));
+        }
+        return boards;
     }
 
     @Override
@@ -46,7 +50,31 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void deleteBoard(Long id) {
-        boardMapper.deleteBoard(id);
+        Board boardByid = boardMapper.getBoardById(id);
+        Long parent_board_id = boardByid.getParent_board_id();
+        List<Board> boards = boardMapper.getBoardsByParentBoardId(id);
+        List<Board> boards_parent = boardMapper.getBoardsByParentBoardId(parent_board_id);
+
+        boolean canDelete = true;
+        for (Board board : boards_parent) {
+            if (!board.getIs_deleted()){
+                canDelete = false;
+                break;
+            }
+        }
+
+        for (Board board : boards) {
+            if (!board.getIs_deleted()){
+                canDelete = false;
+                break;
+            }
+        }
+
+        if (canDelete) {
+            boardMapper.deleteBoard(id);
+        }else{
+            boardMapper.updateBoard(id, new Board(true, id, "삭제되었습니다", "삭제되었습니다", "삭제되었습니다", "삭제되었습니다"));
+        }
     }
 
     @Override

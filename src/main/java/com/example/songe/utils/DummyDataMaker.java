@@ -35,7 +35,7 @@ public class DummyDataMaker implements CommandLineRunner {
     public void run(String... args){
         if (boardMapper.getTotalBoardCount() < 100) {
             List<Board> boards = new ArrayList<>();
-            for (int i = 1; i <= TR; i++) {
+            for (Long i = 1L; i <= TR; i++) {
                 Board board = new Board();
                 board.setId(i);
                 board.setWriter("writer" + i);

@@ -8,10 +8,11 @@ import java.util.List;
 @Mapper
 public interface BoardMapper {
 
-
-
-    @Select("SELECT * FROM board ORDER BY id DESC LIMIT #{offset}, #{pageSize}")
+    @Select("SELECT * FROM board WHERE parent_board_id IS NULL ORDER BY id DESC LIMIT #{offset}, #{pageSize}")
     List<Board> getBoards(int offset, int pageSize);
+
+    @Select("SELECT * FROM board WHERE parent_board_id = #{parent_board_id} ORDER BY level, id DESC")
+    List<Board> getReplies(Long parent_board_id);
 
     @Select("SELECT COUNT(*) FROM board")
     Integer getTotalBoardCount();
@@ -28,6 +29,10 @@ public interface BoardMapper {
     @Delete("DELETE FROM board WHERE id = #{id}")
     void deleteBoard(Long id);
 
-    @Insert("INSERT INTO board (writer, password, title, content) VALUES (#{writer}, #{password}, #{title}, #{content})")
+    @Insert("INSERT INTO board (writer, password, title, content ,parent_board_id,parent_id,level) VALUES (#{writer}, #{password}, #{title}, #{content},#{parent_board_id},#{parent_id},#{level})")
     void createBoard(Board board);
+
+    @Select("SELECT * FROM board WHERE parent_board_id = #{id}")
+    List<Board> getBoardsByParentBoardId(Long id);
+
 }

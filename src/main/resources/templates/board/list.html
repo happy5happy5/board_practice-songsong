@@ -26,12 +26,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="board : ${boardsDTO.boards}">
+        <tr  th:each="board : ${boardsDTO.boards}" th:id="'pbid-'+ ${board.id}" >
             <td th:text="${board.id}">1</td>
             <td>
                 <a th:id="'atagId-' + ${board.id}" th:href="@{/board/view/{id}(id=${board.id})}">
                     <!-- 들여쓰기 표시 -->
-                    <span th:if="${board.level > 0}" >&#x25A0;</span>
+                    <span th:if="${board.level > 0}">&#x25A0;</span>
                     <!-- level이 1 이상일 때 're:' 추가 -->
                     <span th:if="${board.level > 0}">
                         <span th:id="'spantagReId-'+${board.id}" th:each="i : ${#numbers.sequence(1, board.level - 1)}">re:</span>
@@ -44,6 +44,7 @@
             <td th:text="${board.writer}">Sample Writer</td>
             <td th:text="${board.created_time}">2021-10-20</td>
             <!-- 다른 필드 추가 -->
+<!--            아래쪽에 새로 답글을 추가-->
         </tr>
         </tbody>
     </table>
@@ -73,6 +74,76 @@
         </li>
     </ul>
 </div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let boardsDTO = [[${boardsDTO}]];
+    /*]]>*/
+    console.log(boardsDTO);
+
+    boardsDTO.boards.forEach((board) => {
+        const id = board.id;
+        board.replies.forEach((reply) => {
+            console.log(reply);
+            let son;
+            if (reply.parent_id){
+                son = reply.parent_id;
+            }else if(reply.parent_board_id){
+                son = reply.parent_board_id;
+            } else {
+                son = id;
+            }
+            // 참조할 부모 <tr> 요소를 가져오기
+            console.log(son)
+            const parentTr = document.getElementById('pbid-' + son);
+
+            // 답글을 담을 새로운 <tr> 요소 생성
+            const replyTr = document.createElement('tr');
+            replyTr.setAttribute('id', 'pbid-' + reply.id);
+
+            // ID
+            const idTd = document.createElement('td');
+            idTd.textContent = reply.id;
+            replyTr.appendChild(idTd);
+
+            // 제목, 들여쓰기, 're:' 표시
+            const titleTd = document.createElement('td');
+            const reText = 're: '.repeat(reply.level > 0 ? reply.level  : 0);
+
+            // 제목을 <a> 태그로 감싸주고 제목 앞에 're:'를 추가
+            const titleA = document.createElement('a');
+            titleA.href = '/board/view/' + reply.id;
+            titleA.id = 'atagId-' + reply.id;
+
+            console.log(reText+reply.level)
+
+
+            const spanRe = document.createElement('span');
+            spanRe.id = 'spantagReId-' + reply.id;
+            spanRe.textContent = reText+reply.title;
+
+            titleA.appendChild(spanRe);
+
+            titleTd.appendChild(titleA);
+
+            replyTr.appendChild(titleTd);
+
+            // 작성자
+            const writerTd = document.createElement('td');
+            writerTd.textContent = reply.writer;
+            replyTr.appendChild(writerTd);
+
+            // 생성일
+            const createdTimeTd = document.createElement('td');
+            createdTimeTd.textContent = reply.created_time;
+            replyTr.appendChild(createdTimeTd);
+
+            // 부모 <tr> 다음에 답글 <tr> 요소 추가
+            parentTr.parentNode.insertBefore(replyTr, parentTr.nextSibling);
+        });
+    });
+
+
+</script>
 <script>
     // 게시물 제목이 길 경우, 제목을 축약하여 표시
     const atagIds = document.querySelectorAll('[id^="atagId-"]');
@@ -83,7 +154,6 @@
             atagId.innerText = atagIdText.substring(0, 40) + '...';
         }
     });
-
 </script>
 </body>
 </html>
